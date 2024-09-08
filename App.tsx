@@ -4,7 +4,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import Routes from "./src/routes";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import { StatusBar as StatusBarReact } from "react-native";
 import { SafeAreaView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,10 +31,14 @@ export default function App() {
     return null;
   }
 
+  const statusBarHeight = StatusBarReact.currentHeight || 0;
+
   return (
     <NavigationContainer>
       <StatusBar style="light" />
-      <SafeAreaView style={{ height: "100%", backgroundColor: "#171719" }}>
+      <SafeAreaView
+        style={{ paddingTop: statusBarHeight, height: "100%", backgroundColor: "#171719" }}
+      >
         <Routes></Routes>
       </SafeAreaView>
     </NavigationContainer>

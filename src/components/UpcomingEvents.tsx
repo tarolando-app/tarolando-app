@@ -13,7 +13,7 @@ export default function UpcomingEvents({ tab }: any) {
   return (
     <View style={{ marginTop: 48 }}>
       <View style={styles.header}>
-        <Text style={styles.text}>Próxmos eventos</Text>
+        <Text style={styles.text}>Próximos eventos</Text>
         <TouchableOpacity>
           <Text style={styles.textSeeMore}>Ver mais</Text>
         </TouchableOpacity>
