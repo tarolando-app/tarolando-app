@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Routes from "./src/routes";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
+import { SafeAreaView } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -31,7 +32,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <StatusBar style="light" />
-      <Routes></Routes>
+      <SafeAreaView style={{ height: "100%", backgroundColor: "#171719" }}>
+        <Routes></Routes>
+      </SafeAreaView>
     </NavigationContainer>
   );
 }

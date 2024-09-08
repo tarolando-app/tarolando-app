@@ -5,7 +5,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Página de Map!</Text>
-      <StatusBar style="auto" />
     </View>
   );
 }

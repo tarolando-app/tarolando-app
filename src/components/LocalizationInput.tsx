@@ -29,13 +29,13 @@ const styles = StyleSheet.create({
   textLocalization: {
     color: "#FFF",
     opacity: 0.5,
-    fontSize: 14,
+    fontSize: 16,
     marginBottom: 2,
     fontFamily: "PlusJakartaSans-400",
   },
   text: {
     color: "#FFF",
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "PlusJakartaSans-500",
   },
 });

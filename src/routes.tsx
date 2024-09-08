@@ -80,7 +80,7 @@ export default function Routes() {
         }}
       ></Tab.Screen>
       <Tab.Screen
-        name="Profile"
+        name="Perfil"
         component={Profile}
         options={{
           tabBarIcon: ({ size, color }) => (

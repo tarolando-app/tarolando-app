@@ -13,7 +13,7 @@ export default function CardEvent() {
         width={"100%"}
         url="https://diariodocomercio.com.br/wp-content/uploads/2023/01/festa-pic.jpg"
       ></GradientImage>
-      <GradientView height={100} width={"100%"}>
+      <GradientView height={110} width={"100%"}>
         <View
           style={{
             zIndex: 2,
@@ -52,7 +52,7 @@ export default function CardEvent() {
 const styles = StyleSheet.create({
   container: {
     width: 240,
-    height: 236,
+    height: 230,
     borderRadius: 20,
     backgroundColor: "#252527",
   },

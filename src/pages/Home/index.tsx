@@ -38,11 +38,11 @@ export default function App() {
           />
         </TouchableOpacity>
       </View>
-      <View style={{ marginTop: 48 }}>
+      <View style={{ marginTop: 52 }}>
         <Tabs tabs={tabs} />
       </View>
 
-      <View style={{ marginTop: 48 }}>
+      <View style={{ marginTop: 52 }}>
         <HappeningNow />
       </View>
     </SafeAreaView>
@@ -55,8 +55,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#171719",
     color: "#FFF",
     paddingTop: StatusBar.currentHeight,
-    paddingRight: 16,
-    paddingLeft: 16,
     position: 'relative'
   },
   headerWrapper: {
@@ -65,6 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingTop: 16,
+    marginHorizontal: 16
   },
   imageBackground: {
     position: 'absolute',

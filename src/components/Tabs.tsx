@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#FFF",
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "PlusJakartaSans-600",
   },
   textSelected: {
     color: "#99DCFF",
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "PlusJakartaSans-600",
   },
 });

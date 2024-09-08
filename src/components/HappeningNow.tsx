@@ -18,12 +18,13 @@ export default function HappeningNow() {
           <Text style={styles.textSeeMore}>Ver mais</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView horizontal={true}>
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
         <View
           style={{
             display: "flex",
             flexDirection: "row",
             gap: 24,
+            marginHorizontal: 16,
           }}
         >
           <CardEvent></CardEvent>
@@ -42,15 +43,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 24,
+    marginHorizontal: 16,
   },
   text: {
     color: "#FFF",
-    fontSize: 18,
+    fontSize: 20,
     marginBottom: 2,
     fontFamily: "PlusJakartaSans-600",
   },
   textSeeMore: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "PlusJakartaSans-600",
     color: "#99DCFF",
   },
