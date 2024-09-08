@@ -1,8 +1,19 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import CardEvent from './CardEvent';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import CardEvent from "./CardEvent";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
+import { Dimensions } from "react-native";
 
-export default function HappeningNow({ tab }: any) {
+const screenWidth = Dimensions.get("window").width;
+
+export default function HappeningNow({ tab, events = [] }: any) {
   return (
     <View>
       <View style={styles.header}>
@@ -12,10 +23,88 @@ export default function HappeningNow({ tab }: any) {
         </TouchableOpacity>
       </View>
       <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
-        <View style={{ flexDirection: 'row', gap: 24, marginHorizontal: 16 }}>
-          <CardEvent></CardEvent>
-          <CardEvent></CardEvent>
-          <CardEvent></CardEvent>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 24,
+            marginHorizontal: 16,
+          }}
+        >
+          {events.length == 0 && (
+            <View
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: screenWidth,
+                marginVertical: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "PlusJakartaSans-500",
+                  fontSize: 20,
+                  color: "#FFF",
+                  width: '80%',
+                  textAlign: "center",
+                  alignSelf: "center",
+                  marginBottom: 10,
+                }}
+              >
+                Não há eventos disponíveis agora.
+              </Text>
+              <Text
+                style={{
+                  fontFamily: "PlusJakartaSans-500",
+                  fontSize: 16,
+                  color: "#FFF",
+                  width: '80%',
+                  textAlign: "center",
+                  alignSelf: "center",
+                }}
+              >
+                Está em alguma evento? Informe a comunidade.
+              </Text>
+              <TouchableOpacity style={{ alignSelf: "center", marginTop: 20 }}>
+                <LinearGradient
+                  colors={["#AE03FF", "#5756FF", "#00A8FF"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: 'center',
+                    borderRadius: 5,
+                    width: 150,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "PlusJakartaSans-700",
+                      fontSize: 16,
+                      color: "#FFF",
+                      width: 100,
+                      textAlign: "center",
+                      alignSelf: "center",
+                      marginVertical: 20,
+                    }}
+                  >
+                    Criar evento
+                  </Text>
+                  <MaterialCommunityIcons
+                    name="plus"
+                    size={32}
+                    color={"#FFF"}
+                  />
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
+          )}
+          {events.map((event: any) => (
+            <CardEvent key={event.eventId} event={event}></CardEvent>
+          ))}
         </View>
       </ScrollView>
     </View>
@@ -24,17 +113,17 @@ export default function HappeningNow({ tab }: any) {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 24,
     marginHorizontal: 16,
   },
   text: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 20,
   },
   textSeeMore: {
     fontSize: 18,
-    color: '#99DCFF',
+    color: "#99DCFF",
   },
 });

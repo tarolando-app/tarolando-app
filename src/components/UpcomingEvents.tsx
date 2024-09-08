@@ -9,7 +9,7 @@ import {
 import CardEvent from "./CardEvent";
 import SimpleCardEvent from "./SimpleCardEvent";
 
-export default function UpcomingEvents({ tab }: any) {
+export default function UpcomingEvents({ tab, events = [] }: any) {
   return (
     <View style={{ marginTop: 48, paddingBottom: 48 }}>
       <View style={styles.header}>
@@ -19,10 +19,12 @@ export default function UpcomingEvents({ tab }: any) {
         </TouchableOpacity>
       </View>
       <View>
-        <View style={{ flexDirection: "column", gap: 24, marginHorizontal: 16 }}>
-          <SimpleCardEvent></SimpleCardEvent>
-          <SimpleCardEvent></SimpleCardEvent>
-          <SimpleCardEvent></SimpleCardEvent>
+        <View
+          style={{ flexDirection: "column", gap: 24, marginHorizontal: 16 }}
+        >
+          {events.map((event: any) => (
+            <SimpleCardEvent key={event.eventId} event={event}></SimpleCardEvent>
+          ))}
         </View>
       </View>
     </View>

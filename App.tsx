@@ -6,6 +6,7 @@ import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { LocationProvider } from "./src/contexts/LocationContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,12 +33,12 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar style="light" />
-      <SafeAreaView
-        style={{ height: "100%", backgroundColor: "#171719" }}
-      >
-        <Routes></Routes>
-      </SafeAreaView>
+      <LocationProvider>
+        <StatusBar style="light" />
+        <SafeAreaView style={{ height: "100%", backgroundColor: "#171719" }}>
+          <Routes></Routes>
+        </SafeAreaView>
+      </LocationProvider>
     </NavigationContainer>
   );
 }

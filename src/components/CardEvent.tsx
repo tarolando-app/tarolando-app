@@ -5,13 +5,21 @@ import { LinearGradient } from "expo-linear-gradient";
 import GradientImage from "./GradientImage";
 import GradientView from "./GradientView";
 
-export default function CardEvent() {
+export default function CardEvent({ event }: any) {
+  var moment = require("moment/min/moment-with-locales");
+  moment.locale("pt-br");
+
+  const formattedDate = moment(event.dateAndTime).format("dddd, D MMM • HH[h]");
+
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
   return (
     <TouchableOpacity style={styles.container}>
       <GradientImage
         height={120}
         width={"100%"}
-        url="https://diariodocomercio.com.br/wp-content/uploads/2023/01/festa-pic.jpg"
+        url={event.urlCoverPhoto}
         styleImage={{ borderTopRightRadius: 20, borderTopLeftRadius: 20 }}
       ></GradientImage>
       <GradientView height={110} width={"100%"}>
@@ -29,15 +37,17 @@ export default function CardEvent() {
               justifyContent: "space-between",
             }}
           >
-            <Text style={styles.text}>Pool Party</Text>
+            <Text style={styles.text}>{event.name}</Text>
             <MaterialCommunityIcons name="fire" size={26} color={"#f2721c"} />
           </View>
           <View>
             <Text style={styles.textEventName}>
-              Bar do Carinha {"  "}
-              <Text style={styles.textDistance}>1 km</Text>
+              {event.googlePlace.name} {"  "}
+              <Text style={styles.textDistance}>{event.distanceInKm} km</Text>
             </Text>
-            <Text style={styles.textInfo}>Quinta-feira, 15 ago • 15h</Text>
+            <Text style={styles.textInfo}>
+              {capitalizeFirstLetter(formattedDate)}
+            </Text>
           </View>
         </View>
       </GradientView>

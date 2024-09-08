@@ -77,6 +77,7 @@ export default function App() {
         initialLayout={initialLayout}
         renderTabBar={() => null} // Remove o cabeçalho/tab bar nativo
         swipeEnabled={true} // Habilita o swipe
+        lazy={true}
         style={{ backgroundColor: "transparent", marginTop: 48 }} // Remove fundo do TabView
       />
     </SafeAreaView>

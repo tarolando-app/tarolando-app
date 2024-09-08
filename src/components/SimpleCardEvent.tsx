@@ -1,23 +1,32 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
-export default function SimpleCardEvent() {
+export default function SimpleCardEvent({ event }: any) {
+  var moment = require("moment/min/moment-with-locales");
+  moment.locale("pt-br");
+
+  const formattedDate = moment(event.dateAndTime).format("dddd, D MMM • HH[h]");
+
+  const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <TouchableOpacity style={styles.container}>
       <Image
         source={{
-          uri: 'https://diariodocomercio.com.br/wp-content/uploads/2023/01/festa-pic.jpg"',
+          uri: event?.urlCoverPhoto,
         }}
         style={styles.image}
         resizeMode="cover"
       />
       <View>
-        <Text style={styles.text}>Pool Party</Text>
+        <Text style={styles.text}>{event.name}</Text>
         <Text style={styles.textEventName}>
-          Bar do Carinha {"  "}
-          <Text style={styles.textDistance}>1 km</Text>
+        {event.googlePlace.name} {"  "}
+          <Text style={styles.textDistance}>{event.distanceInKm} km</Text>
         </Text>
-        <Text style={styles.textInfo}>Quinta-feira, 15 ago • 15h</Text>
+        <Text style={styles.textInfo}>{capitalizeFirstLetter(formattedDate)}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -32,8 +41,8 @@ const styles = StyleSheet.create({
     padding: 10,
     display: "flex",
     flexDirection: "row",
-    alignItems: 'center',
-    gap: 12
+    alignItems: "center",
+    gap: 12,
   },
   image: {
     height: "100%",

@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import * as Location from 'expo-location';
 
 interface LocationProps {
@@ -10,7 +8,13 @@ interface LocationProps {
   country?: string | null;
 }
 
-export default function LocalizationInput() {
+interface LocationContextProps {
+  location: LocationProps | null;
+}
+
+const LocationContext = createContext<LocationContextProps | undefined>(undefined);
+
+export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [location, setLocation] = useState<LocationProps | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -33,6 +37,7 @@ export default function LocalizationInput() {
         async (locationData) => {
           const { latitude, longitude } = locationData.coords;
 
+          // Obter informações de localização reversa
           let [reverseGeocodeResult] = await Location.reverseGeocodeAsync({ latitude, longitude });
           const city = reverseGeocodeResult?.city;
           const country = reverseGeocodeResult?.country;
@@ -51,47 +56,17 @@ export default function LocalizationInput() {
     };
   }, []);
 
-  let locationText = 'Aguardando localização...';
-  if (errorMsg) {
-    locationText = errorMsg;
-  } else if (location) {
-    locationText = location.city && location.country
-      ? `${location.city}, ${location.country}`
-      : `Lat: ${location.latitude.toFixed(2)}, Long: ${location.longitude.toFixed(2)}`;
-  }
-
   return (
-    <TouchableOpacity onPress={() => {
-        Alert.alert(`Lat: ${location?.latitude}, Long: ${location?.longitude}`)
-    }} style={styles.container}>
-      <Text style={styles.textLocalization}>
-        Sua localização{' '}
-        <MaterialCommunityIcons
-          name="arrow-down-drop-circle-outline"
-          size={16}
-          color={"#FFF"}
-        />
-      </Text>
-      <Text style={styles.text}>{locationText}</Text>
-    </TouchableOpacity>
+    <LocationContext.Provider value={{ location }}>
+      {children}
+    </LocationContext.Provider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-    borderRadius: 8,
-  },
-  textLocalization: {
-    color: '#FFF',
-    opacity: 0.5,
-    fontSize: 16,
-    marginBottom: 2,
-    fontFamily: 'PlusJakartaSans-400',
-  },
-  text: {
-    color: '#FFF',
-    fontSize: 16,
-    fontFamily: 'PlusJakartaSans-500',
-  },
-});
+export const useLocation = () => {
+  const context = React.useContext(LocationContext);
+  if (context === undefined) {
+    throw new Error('useLocation must be used within a LocationProvider');
+  }
+  return context;
+};
