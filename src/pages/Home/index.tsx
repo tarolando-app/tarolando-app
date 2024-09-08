@@ -5,6 +5,7 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
+  StatusBar,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import HappeningNow from "../../components/HappeningNow";
@@ -34,8 +35,10 @@ export default function App() {
     setIndex(selectedIndex);
   };
 
+  const statusBarHeight = StatusBar.currentHeight || 0;
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{paddingTop: statusBarHeight, ...styles.container}}>
       <View style={styles.imageBackground}>
         <GradientImage
           width={"120%"}
