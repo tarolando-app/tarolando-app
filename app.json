@@ -22,6 +22,34 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/PlusJakartaSans/PlusJakartaSans-ExtraLight.ttf",
+            "./assets/fonts/PlusJakartaSans/PlusJakartaSans-Light.ttf",
+            "./assets/fonts/PlusJakartaSans/PlusJakartaSans-Regular.ttf",
+            "./assets/fonts/PlusJakartaSans/PlusJakartaSans-Medium.ttf",
+            "./assets/fonts/PlusJakartaSans/PlusJakartaSans-SemiBold.ttf",
+            "./assets/fonts/PlusJakartaSans/PlusJakartaSans-Bold.ttf",
+            "./assets/fonts/PlusJakartaSans/PlusJakartaSans-ExtraBold.ttf"
+          ]
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "e85281a4-8bdd-4d9b-ad6c-9c26efa5f16f"
+      }
+    },
+    "owner": "tarolando",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e85281a4-8bdd-4d9b-ad6c-9c26efa5f16f"
     }
   }
 }
