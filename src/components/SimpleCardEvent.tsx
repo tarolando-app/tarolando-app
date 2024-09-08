@@ -17,7 +17,7 @@ export default function SimpleCardEvent() {
           Bar do Carinha {"  "}
           <Text style={styles.textDistance}>1 km</Text>
         </Text>
-        <Text style={styles.textInfo}>Quinta-feira, 15 ago - 15h</Text>
+        <Text style={styles.textInfo}>Quinta-feira, 15 ago • 15h</Text>
       </View>
     </TouchableOpacity>
   );

@@ -43,7 +43,7 @@ export default function App() {
         <GradientImage
           width={"120%"}
           height={300}
-          url="https://i.ibb.co/xSxBP6X/background-home.png"
+          src={require("../../../assets/background-home.png")}
         />
       </View>
       <View style={styles.headerWrapper}>

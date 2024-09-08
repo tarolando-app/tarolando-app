@@ -12,6 +12,7 @@ export default function CardEvent() {
         height={120}
         width={"100%"}
         url="https://diariodocomercio.com.br/wp-content/uploads/2023/01/festa-pic.jpg"
+        styleImage={{ borderTopRightRadius: 20, borderTopLeftRadius: 20 }}
       ></GradientImage>
       <GradientView height={110} width={"100%"}>
         <View
@@ -29,19 +30,14 @@ export default function CardEvent() {
             }}
           >
             <Text style={styles.text}>Pool Party</Text>
-            <Image
-              style={{
-                height: 22,
-              }}
-              source={require("../../assets/3d-fire.png")}
-              resizeMode="cover"
-            />
+            <MaterialCommunityIcons name="fire" size={26} color={"#f2721c"} />
           </View>
           <View>
             <Text style={styles.textEventName}>
-              Bar do Carinha {"  "}<Text style={styles.textDistance}>1 km</Text>
+              Bar do Carinha {"  "}
+              <Text style={styles.textDistance}>1 km</Text>
             </Text>
-            <Text style={styles.textInfo}>Quinta-feira, 15 ago - 15h</Text>
+            <Text style={styles.textInfo}>Quinta-feira, 15 ago • 15h</Text>
           </View>
         </View>
       </GradientView>

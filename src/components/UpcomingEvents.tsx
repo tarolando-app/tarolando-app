@@ -11,7 +11,7 @@ import SimpleCardEvent from "./SimpleCardEvent";
 
 export default function UpcomingEvents({ tab }: any) {
   return (
-    <View style={{ marginTop: 48 }}>
+    <View style={{ marginTop: 48, paddingBottom: 48 }}>
       <View style={styles.header}>
         <Text style={styles.text}>Próximos eventos</Text>
         <TouchableOpacity>

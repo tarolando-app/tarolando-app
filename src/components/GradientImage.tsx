@@ -5,17 +5,25 @@ import { LinearGradient } from "expo-linear-gradient";
 interface GradientImageProps {
   width: any;
   height: number;
-  url: string;
+  url?: string;
+  src?: string;
+  styleImage?: ImageStyle;
 }
 
 const GradientImage: React.FC<GradientImageProps> = ({
   width,
   height,
   url,
+  src = require("../../assets/no-image.png"),
+  styleImage,
 }) => {
   return (
     <View style={[styles.container, { width, height }]}>
-      <Image source={{ uri: url }} style={styles.image} resizeMode="cover" />
+      <Image
+        source={url ? { uri: url } : src}
+        style={{ ...styleImage, ...styles.image }}
+        resizeMode="cover"
+      />
       <LinearGradient
         colors={["rgba(23, 23, 25, 0.3)", "#171719"]}
         style={styles.gradient}
@@ -34,8 +42,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     position: "absolute",
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
   } as ImageStyle,
   gradient: {
     ...StyleSheet.absoluteFillObject,
