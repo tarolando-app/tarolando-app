@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,31 +15,34 @@ interface Tab {
 
 interface TabsProps {
   tabs: Tab[];
+  selectedIndex: number; // Adiciona esta prop
   onTabChange?: (index: number) => void;
 }
 
-export default function Tabs({ tabs = [], onTabChange }: TabsProps) {
-  const [selectedIndex, setSelectedIndex] = useState<any>(0);
-  const [animation] = useState<any>(new Animated.Value(0));
+export default function Tabs({
+  tabs = [],
+  selectedIndex,
+  onTabChange,
+}: TabsProps) {
+  const [animation] = useState<any>(new Animated.Value(selectedIndex));
+
+  useEffect(() => {
+    Animated.timing(animation, {
+      toValue: selectedIndex,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [selectedIndex]);
 
   const handlePress = (index: number) => {
-    if (index !== selectedIndex) {
-      setSelectedIndex(index);
-      Animated.timing(animation, {
-        toValue: index,
-        duration: 1000,
-        useNativeDriver: false,
-      }).start();
-      if (onTabChange) {
-        onTabChange(index);
-      }
+    if (index !== selectedIndex && onTabChange) {
+      onTabChange(index); 
     }
   };
 
-  // Animated value for the selected box position
-  const translateY = animation.interpolate({
+  const translateX = animation.interpolate({
     inputRange: tabs.map((_, i) => i),
-    outputRange: tabs.map((_, i) => i * 50), // Adjust the multiplier to fit your layout
+    outputRange: tabs.map((_, i) => i * 4), 
   });
 
   return (
@@ -57,7 +60,7 @@ export default function Tabs({ tabs = [], onTabChange }: TabsProps) {
           </Text>
           {index === selectedIndex && (
             <Animated.View
-              style={[styles.selectBox, { transform: [{ translateY }] }]}
+              style={[styles.selectBox, { transform: [{ translateX }] }]}
             ></Animated.View>
           )}
         </TouchableOpacity>
