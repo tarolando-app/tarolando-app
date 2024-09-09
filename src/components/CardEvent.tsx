@@ -62,7 +62,7 @@ export default function CardEvent({ event }: any) {
           </View>
           <View>
             <Text style={styles.textEventName}>
-              {truncateText(event.googlePlace.name, 22)} {"  "}
+              {truncateText(event.googlePlace.name, 21)} {"  "}
               <Text style={styles.textDistance}>{event.distanceInKm} km</Text>
             </Text>
             <Text style={styles.textInfo}>
