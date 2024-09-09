@@ -28,7 +28,7 @@ export default function LocalizationInput() {
         {
           accuracy: Location.Accuracy.High,
           timeInterval: 30000, // Atualiza a cada 30 segundos
-          distanceInterval: 10, // Atualiza se o usuário se mover mais de 10 metros
+          distanceInterval: 2000, // Atualiza se o usuário se mover mais de 2000 metros (2km)
         },
         async (locationData) => {
           const { latitude, longitude } = locationData.coords;
