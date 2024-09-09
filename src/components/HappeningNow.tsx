@@ -10,10 +10,13 @@ import CardEvent from "./CardEvent";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Dimensions } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const screenWidth = Dimensions.get("window").width;
 
 export default function HappeningNow({ tab, events = [] }: any) {
+  const navigation = useNavigation<any>();
+
   return (
     <View>
       <View style={styles.header}>
@@ -46,7 +49,7 @@ export default function HappeningNow({ tab, events = [] }: any) {
                   fontFamily: "PlusJakartaSans-500",
                   fontSize: 20,
                   color: "#FFF",
-                  width: '80%',
+                  width: "80%",
                   textAlign: "center",
                   alignSelf: "center",
                   marginBottom: 10,
@@ -59,14 +62,17 @@ export default function HappeningNow({ tab, events = [] }: any) {
                   fontFamily: "PlusJakartaSans-500",
                   fontSize: 16,
                   color: "#FFF",
-                  width: '80%',
+                  width: "80%",
                   textAlign: "center",
                   alignSelf: "center",
                 }}
               >
-                Está em alguma evento? Informe a comunidade.
+                Está em algum evento? Informe a comunidade.
               </Text>
-              <TouchableOpacity style={{ alignSelf: "center", marginTop: 20 }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Evento")}
+                style={{ alignSelf: "center", marginTop: 20 }}
+              >
                 <LinearGradient
                   colors={["#AE03FF", "#5756FF", "#00A8FF"]}
                   start={{ x: 0, y: 0 }}
@@ -75,7 +81,7 @@ export default function HappeningNow({ tab, events = [] }: any) {
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
-                    justifyContent: 'center',
+                    justifyContent: "center",
                     borderRadius: 5,
                     width: 150,
                   }}

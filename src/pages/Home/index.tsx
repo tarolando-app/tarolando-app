@@ -17,20 +17,18 @@ import Events from "./components/Events";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-export default function App() {
-  const [index, setIndex] = useState(0); // Gerencia o índice das abas
+export default function Home() {
+  const [index, setIndex] = useState(1);
   const [routes] = useState([
     { key: "comunidade", title: "Comunidade" },
     { key: "recomendados", title: "Recomendados" },
   ]);
 
-  // Mapeia as cenas para cada aba
   const renderScene = SceneMap({
-    comunidade: () => <Events tab="Comunidade" />,
-    recomendados: () => <Events tab="Recomendados" />,
+    comunidade: () => <Events tab="Comunidade" index={index}/>,
+    recomendados: () => <Events tab="Recomendados" index={index}/>,
   });
 
-  // Atualiza o índice com base no swipe ou clique no seu componente Tabs
   const handleTabChange = (selectedIndex: number) => {
     setIndex(selectedIndex);
   };

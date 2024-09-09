@@ -1,5 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Home from "./pages/Home";
@@ -10,10 +11,14 @@ import Profile from "./pages/Profile";
 import { Image, View } from "react-native";
 
 import ButtonMenu from "./components/ButtonMenu";
+import EventDetails from "./pages/EventDetails";
+import EventsRoutes from "./pages/Events";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-export default function Routes() {
+
+export function Routes() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -35,7 +40,7 @@ export default function Routes() {
     >
       <Tab.Screen
         name="Início"
-        component={Home}
+        component={EventsRoutes}
         options={{
           headerShown: false,
           tabBarIcon: ({ size, color }) => (
@@ -94,5 +99,13 @@ export default function Routes() {
         }}
       ></Tab.Screen>
     </Tab.Navigator>
+  );
+}
+
+export function ExtraRoutes() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="EventDetails" component={EventDetails} />
+    </Stack.Navigator>
   );
 }

@@ -1,90 +1,45 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { Alert, View, ScrollView, RefreshControl } from "react-native";
+import React, { useState, memo } from "react";
+import { View, ScrollView, RefreshControl, Text } from "react-native";
 import HappeningNow from "../../../components/HappeningNow";
 import UpcomingEvents from "../../../components/UpcomingEvents";
-import { fetchHappeningNow, fetchUpcoming } from "../../../services/eventService";
-import { useLocation } from "../../../contexts/LocationContext";
-import moment from "moment";
+import { useEvents } from "../../../hooks/useEvents";
+import { Skeleton } from "@rneui/themed";
+import SkeletonLoadingHome from "../../../components/skeletons/SkeletonLoadingHome";
 
-export default function Events({ tab }: any) {
-  const [eventsHappeningNow, setEventsHappeningNow] = useState<Event[]>([]);
-  const [eventsUpcoming, setEventsUpcoming] = useState<Event[]>([]);
+function Events({ tab, index }: any) {
   const [refreshing, setRefreshing] = useState(false);
-  const [locationAvailable, setLocationAvailable] = useState(false);
-  const { location } = useLocation();
-
-  // Função para carregar eventos quando a localização está disponível
-  const loadEvents = useCallback(async () => {
-    try {
-      if (location) {
-        setLocationAvailable(true);
-
-        const startDate = moment().format('YYYY-MM-DDTHH:mm:ss');  // Formato ISO8601
-        const endDate = moment().add(3, 'months').format('YYYY-MM-DDTHH:mm:ss');  // 3 meses adiante
-
-        const happeningNowPromise = fetchHappeningNow({
-          latitude: location?.latitude,
-          longitude: location?.longitude,
-          page: 1,
-          pageSize: 10,
-          maxDistanceInKm: 30,
-          recommended: tab === "Recomendados",
-        });
-
-        const upcomingPromise = fetchUpcoming({
-          latitude: location?.latitude,
-          longitude: location?.longitude,
-          page: 1,
-          pageSize: 10,
-          maxDistanceInKm: 30,
-          recommended: tab === "Recomendados",
-          startDate,
-          endDate,
-        });
-
-        const [happeningNowResponse, upcomingResponse] = await Promise.all([happeningNowPromise, upcomingPromise]);
-
-        setEventsHappeningNow(happeningNowResponse.data.items);
-        setEventsUpcoming(upcomingResponse.data.items);
-      }
-    } catch (error) {
-      Alert.alert("Ocorreu um erro ao buscar os eventos.");
-    }
-  }, [location, tab]);
-
-  useEffect(() => {
-    if (location) {
-      loadEvents();
-    } else {
-      // Caso a localização não esteja disponível, configura um intervalo para verificar
-      const intervalId = setInterval(() => {
-        if (location) {
-          clearInterval(intervalId);
-          loadEvents();
-        }
-      }, 1000);
-
-      // Limpa o intervalo caso o componente seja desmontado
-      return () => clearInterval(intervalId);
-    }
-  }, [location, loadEvents]);
+  const { eventsHappeningNow, eventsUpcoming, loading, error, loadEvents } =
+    useEvents(tab, index);
 
   const onRefresh = async () => {
     setRefreshing(true);
-    try {
-      await loadEvents();
-    } catch (error) {
-      Alert.alert("Ocorreu um erro ao atualizar os eventos.");
-    }
+    await loadEvents();
     setRefreshing(false);
   };
+
+  if (loading) {
+    return <SkeletonLoadingHome />;
+  }
+
+  if (error) {
+    return (
+      <View>
+        <Text>{error}</Text>
+      </View>
+    ); // Mensagem de erro
+  }
 
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       horizontal={false}
       refreshControl={
-        <RefreshControl colors={['#fff']} tintColor="#fff" refreshing={refreshing} onRefresh={onRefresh} />
+        <RefreshControl
+          colors={["#fff"]}
+          tintColor="#fff"
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+        />
       }
     >
       <HappeningNow events={eventsHappeningNow} />
@@ -92,3 +47,5 @@ export default function Events({ tab }: any) {
     </ScrollView>
   );
 }
+
+export default memo(Events);

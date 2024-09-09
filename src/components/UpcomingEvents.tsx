@@ -22,6 +22,30 @@ export default function UpcomingEvents({ tab, events = [] }: any) {
         <View
           style={{ flexDirection: "column", gap: 24, marginHorizontal: 16 }}
         >
+                     {events.length == 0 && (
+            <View
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                width: '100%',
+                marginVertical: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "PlusJakartaSans-500",
+                  fontSize: 20,
+                  color: "#FFF",
+                  width: '80%',
+                  textAlign: "center",
+                  alignSelf: "center",
+                  marginBottom: 10,
+                }}
+              >
+                Não há eventos disponíveis.
+              </Text>
+            </View>
+          )}
           {events.map((event: any) => (
             <SimpleCardEvent key={event.eventId} event={event}></SimpleCardEvent>
           ))}

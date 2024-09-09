@@ -4,8 +4,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import GradientImage from "./GradientImage";
 import GradientView from "./GradientView";
+import { useNavigation } from "@react-navigation/native";
 
 export default function CardEvent({ event }: any) {
+  const navigation = useNavigation<any>();
+
+  const handlePress = (id: string) => {
+    navigation.navigate('EventDetails', { id });
+  };
+
   var moment = require("moment/min/moment-with-locales");
   moment.locale("pt-br");
 
@@ -15,7 +22,7 @@ export default function CardEvent({ event }: any) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity onPress={() => {handlePress(event.eventId)}} style={styles.container}>
       <GradientImage
         height={120}
         width={"100%"}

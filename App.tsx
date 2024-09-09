@@ -1,14 +1,16 @@
 import React, { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
-import Routes from "./src/routes";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Routes, ExtraRoutes } from "./src/routes";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LocationProvider } from "./src/contexts/LocationContext";
+import EventDetails from "./src/pages/EventDetails";
 
 SplashScreen.preventAutoHideAsync();
+const Stack = createStackNavigator();
 
 export default function App() {
   const [loaded, error] = useFonts({
@@ -36,7 +38,10 @@ export default function App() {
       <LocationProvider>
         <StatusBar style="light" />
         <SafeAreaView style={{ height: "100%", backgroundColor: "#171719" }}>
-          <Routes></Routes>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Main" component={Routes} />
+            <Stack.Screen name="Chat" component={EventDetails} />
+          </Stack.Navigator>
         </SafeAreaView>
       </LocationProvider>
     </NavigationContainer>
