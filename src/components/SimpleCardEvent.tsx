@@ -11,6 +11,13 @@ export default function SimpleCardEvent({ event }: any) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   return (
     <TouchableOpacity style={styles.container}>
       <Image
@@ -21,9 +28,9 @@ export default function SimpleCardEvent({ event }: any) {
         resizeMode="cover"
       />
       <View>
-        <Text style={styles.text}>{event.name}</Text>
+        <Text style={styles.text}>{truncateText(event.name, 22)}</Text>
         <Text style={styles.textEventName}>
-        {event.googlePlace.name} {"  "}
+        {truncateText(event.googlePlace.name, 22)} {"  "}
           <Text style={styles.textDistance}>{event.distanceInKm} km</Text>
         </Text>
         <Text style={styles.textInfo}>{capitalizeFirstLetter(formattedDate)}</Text>

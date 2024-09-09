@@ -10,7 +10,7 @@ export default function CardEvent({ event }: any) {
   const navigation = useNavigation<any>();
 
   const handlePress = (id: string) => {
-    navigation.navigate('EventDetails', { id });
+    navigation.navigate("EventDetails", { id });
   };
 
   var moment = require("moment/min/moment-with-locales");
@@ -21,8 +21,21 @@ export default function CardEvent({ event }: any) {
   const capitalizeFirstLetter = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
+
+  const truncateText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   return (
-    <TouchableOpacity onPress={() => {handlePress(event.eventId)}} style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        handlePress(event.eventId);
+      }}
+      style={styles.container}
+    >
       <GradientImage
         height={120}
         width={"100%"}
@@ -44,12 +57,12 @@ export default function CardEvent({ event }: any) {
               justifyContent: "space-between",
             }}
           >
-            <Text style={styles.text}>{event.name}</Text>
+            <Text style={styles.text}>{truncateText(event.name, 18)}</Text>
             <MaterialCommunityIcons name="fire" size={26} color={"#f2721c"} />
           </View>
           <View>
             <Text style={styles.textEventName}>
-              {event.googlePlace.name} {"  "}
+              {truncateText(event.googlePlace.name, 22)} {"  "}
               <Text style={styles.textDistance}>{event.distanceInKm} km</Text>
             </Text>
             <Text style={styles.textInfo}>
@@ -64,7 +77,7 @@ export default function CardEvent({ event }: any) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 240,
+    width: 260,
     height: 230,
     borderRadius: 20,
     backgroundColor: "#252527",
