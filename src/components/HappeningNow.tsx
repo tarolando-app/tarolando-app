@@ -57,18 +57,21 @@ export default function HappeningNow({ tab, events = [] }: any) {
               >
                 Não há eventos disponíveis agora.
               </Text>
-              <Text
-                style={{
-                  fontFamily: "PlusJakartaSans-500",
-                  fontSize: 16,
-                  color: "#FFF",
-                  width: "80%",
-                  textAlign: "center",
-                  alignSelf: "center",
-                }}
-              >
-                Está em algum evento? Informe a comunidade.
-              </Text>
+              {tab === "Comunidade" && (
+                <Text
+                  style={{
+                    fontFamily: "PlusJakartaSans-500",
+                    fontSize: 16,
+                    color: "#FFF",
+                    width: "80%",
+                    textAlign: "center",
+                    alignSelf: "center",
+                  }}
+                >
+                  Está em algum evento? Informe a comunidade.
+                </Text>
+              )}
+
               <TouchableOpacity
                 onPress={() => navigation.navigate("Evento")}
                 style={{ alignSelf: "center", marginTop: 20 }}

@@ -42,8 +42,8 @@ function Events({ tab, index }: any) {
         />
       }
     >
-      <HappeningNow events={eventsHappeningNow} />
-      <UpcomingEvents events={eventsUpcoming} />
+      <HappeningNow tab={tab} events={eventsHappeningNow} />
+      <UpcomingEvents tab={tab} events={eventsUpcoming} />
     </ScrollView>
   );
 }
