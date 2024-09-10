@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import * as Location from 'expo-location';
+import React, { createContext, useState, useEffect, ReactNode } from "react";
+import * as Location from "expo-location";
 
 interface LocationProps {
   latitude: number;
@@ -12,9 +12,13 @@ interface LocationContextProps {
   location: LocationProps | null;
 }
 
-const LocationContext = createContext<LocationContextProps | undefined>(undefined);
+const LocationContext = createContext<LocationContextProps | undefined>(
+  undefined
+);
 
-export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const LocationProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [location, setLocation] = useState<LocationProps | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -23,8 +27,8 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }
 
     const fetchLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permissão para acessar a localização foi negada.');
+      if (status !== "granted") {
+        setErrorMsg("Permissão para acessar a localização foi negada.");
         return;
       }
 
@@ -38,8 +42,11 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }
           const { latitude, longitude } = locationData.coords;
 
           // Obter informações de localização reversa
-          let [reverseGeocodeResult] = await Location.reverseGeocodeAsync({ latitude, longitude });
-          const city = reverseGeocodeResult?.city;
+          let [reverseGeocodeResult] = await Location.reverseGeocodeAsync({
+            latitude,
+            longitude,
+          });
+          const city = reverseGeocodeResult?.subregion;
           const country = reverseGeocodeResult?.country;
 
           setLocation({ latitude, longitude, city, country });
@@ -66,7 +73,7 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({ children }
 export const useLocation = () => {
   const context = React.useContext(LocationContext);
   if (context === undefined) {
-    throw new Error('useLocation must be used within a LocationProvider');
+    throw new Error("useLocation must be used within a LocationProvider");
   }
   return context;
 };

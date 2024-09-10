@@ -42,7 +42,7 @@ function Events({ tab, index }: any) {
       horizontal={false}
       refreshControl={
         <RefreshControl
-          colors={["#fff"]}
+          colors={["#333"]}
           tintColor="#fff"
           refreshing={refreshing}
           onRefresh={onRefresh}
