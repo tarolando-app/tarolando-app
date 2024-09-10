@@ -5,11 +5,18 @@ import UpcomingEvents from "../../../components/UpcomingEvents";
 import { useEvents } from "../../../hooks/useEvents";
 import { Skeleton } from "@rneui/themed";
 import SkeletonLoadingHome from "../../../components/skeletons/SkeletonLoadingHome";
+import TrendingEvents from "../../../components/TrendingEvents";
 
 function Events({ tab, index }: any) {
   const [refreshing, setRefreshing] = useState(false);
-  const { eventsHappeningNow, eventsUpcoming, loading, error, loadEvents } =
-    useEvents(tab, index);
+  const {
+    eventsHappeningNow,
+    eventsUpcoming,
+    eventsTrending,
+    loading,
+    error,
+    loadEvents,
+  } = useEvents(tab, index);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -42,6 +49,7 @@ function Events({ tab, index }: any) {
         />
       }
     >
+      {eventsTrending && <TrendingEvents tab={tab} events={eventsTrending} />}
       <HappeningNow tab={tab} events={eventsHappeningNow} />
       <UpcomingEvents tab={tab} events={eventsUpcoming} />
     </ScrollView>

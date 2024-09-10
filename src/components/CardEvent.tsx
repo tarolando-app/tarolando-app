@@ -58,7 +58,9 @@ export default function CardEvent({ event }: any) {
             }}
           >
             <Text style={styles.text}>{truncateText(event.name, 18)}</Text>
-            <MaterialCommunityIcons name="fire" size={26} color={"#f2721c"} />
+            {event.numberCheckIns >= 20 && (
+              <MaterialCommunityIcons name="fire" size={26} color={"#f2721c"} />
+            )}
           </View>
           <View>
             <Text style={styles.textEventName}>

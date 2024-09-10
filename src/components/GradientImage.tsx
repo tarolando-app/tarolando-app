@@ -10,12 +10,14 @@ interface GradientImageProps {
   styleImage?: ImageStyle;
 }
 
-const GradientImage: React.FC<GradientImageProps> = ({
+const GradientImage: React.FC<any> = ({
   width,
   height,
   url,
   src = require("../../assets/no-image.png"),
   styleImage,
+  customShadow = 1,
+  children
 }) => {
   return (
     <View style={[styles.container, { width, height }]}>
@@ -27,9 +29,10 @@ const GradientImage: React.FC<GradientImageProps> = ({
       <LinearGradient
         colors={["rgba(23, 23, 25, 0.3)", "#171719"]}
         style={styles.gradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
+        start={{ x: 0, y: 0.1 }}
+        end={{ x: 0, y: customShadow }}
       />
+      {children}
     </View>
   );
 };

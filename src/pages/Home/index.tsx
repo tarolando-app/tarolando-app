@@ -60,7 +60,7 @@ export default function Home() {
         </TouchableOpacity>
       </View>
 
-      <View style={{ marginTop: 52 }}>
+      <View style={{ marginTop: 32 }}>
       <Tabs
           tabs={[{ name: "Comunidade" }, { name: "Recomendados" }]}
           selectedIndex={index} // Passa o índice atual do TabView

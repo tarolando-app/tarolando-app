@@ -2,7 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import { Alert } from "react-native";
 import moment from "moment";
 import { useLocation } from "../contexts/LocationContext";
-import { fetchHappeningNow, fetchUpcoming } from "../services/eventService";
+import {
+  fetchHappeningNow,
+  fetchUpcoming,
+  fetchTrending,
+} from "../services/eventService";
 
 export function useEvents(tab: string, index: number) {
   const conditions = [
@@ -16,6 +20,7 @@ export function useEvents(tab: string, index: number) {
 
   const [eventsHappeningNow, setEventsHappeningNow] = useState<Event[]>([]);
   const [eventsUpcoming, setEventsUpcoming] = useState<Event[]>([]);
+  const [eventsTrending, setEventsTrending] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { location } = useLocation();
@@ -49,13 +54,22 @@ export function useEvents(tab: string, index: number) {
         endDate,
       });
 
-      const [happeningNowResponse, upcomingResponse] = await Promise.all([
-        happeningNowPromise,
-        upcomingPromise,
-      ]);
+      const trendingPromise = fetchTrending({
+        latitude: location?.latitude,
+        longitude: location?.longitude,
+        recommended: tab === "Recomendados",
+      });
 
+      const [happeningNowResponse, upcomingResponse, trendingResponse] =
+        await Promise.all([
+          happeningNowPromise,
+          upcomingPromise,
+          trendingPromise,
+        ]);
+        
       setEventsHappeningNow(happeningNowResponse.data.items);
       setEventsUpcoming(upcomingResponse.data.items);
+      setEventsTrending(trendingResponse?.data);
       setError(null);
     } catch (error) {
       setError("Ocorreu um erro ao buscar os eventos.");
@@ -71,5 +85,5 @@ export function useEvents(tab: string, index: number) {
     }
   }, [location, loadEvents]);
 
-  return { eventsHappeningNow, eventsUpcoming, loading, error, loadEvents };
+  return { eventsHappeningNow, eventsUpcoming, eventsTrending, loading, error, loadEvents };
 }
