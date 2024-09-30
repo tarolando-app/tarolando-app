@@ -36,7 +36,7 @@ export const LocationProvider: React.FC<{ children: ReactNode }> = ({
         {
           accuracy: Location.Accuracy.High,
           timeInterval: 30000, // Atualiza a cada 30 segundos
-          distanceInterval: 10, // Atualiza se o usuário se mover mais de 10 metros
+          distanceInterval: 100, // Atualiza se o usuário se mover mais de 100 metros
         },
         async (locationData) => {
           const { latitude, longitude } = locationData.coords;

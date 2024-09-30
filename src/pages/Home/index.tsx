@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   StatusBar,
+  Text,
 } from "react-native";
 import { TabView, SceneMap } from "react-native-tab-view";
 import HappeningNow from "../../components/HappeningNow";

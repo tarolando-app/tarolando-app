@@ -5,13 +5,37 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Routes, ExtraRoutes } from "./src/routes";
 import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, Text } from "react-native";
 import { LocationProvider } from "./src/contexts/LocationContext";
 import EventDetails from "./src/pages/EventDetails";
+import { AuthProvider, useAuth } from "./src/contexts/AuthContext";
+import LoginScreen from "./src/auth/Login";
+import WelcomeScreen from "./src/auth/Welcome";
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createStackNavigator();
 
+const AppNavigator = () => {
+  const { isAuthenticated, isGuest } = useAuth();
+
+  return (
+    <SafeAreaView style={{ height: "100%", backgroundColor: "#171719" }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {isAuthenticated ? (
+          <>
+            <Stack.Screen name="Main" component={Routes} />
+            <Stack.Screen name="Chat" component={EventDetails} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+          </>
+        )}
+      </Stack.Navigator>
+    </SafeAreaView>
+  );
+};
 export default function App() {
   const [loaded, error] = useFonts({
     "PlusJakartaSans-200": require("./assets/fonts/PlusJakartaSans/PlusJakartaSans-ExtraLight.ttf"),
@@ -35,15 +59,12 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <LocationProvider>
-        <StatusBar style="light" />
-        <SafeAreaView style={{ height: "100%", backgroundColor: "#171719" }}>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Main" component={Routes} />
-            <Stack.Screen name="Chat" component={EventDetails} />
-          </Stack.Navigator>
-        </SafeAreaView>
-      </LocationProvider>
+      <AuthProvider>
+        <LocationProvider>
+          <StatusBar style="light" />
+          <AppNavigator />
+        </LocationProvider>
+      </AuthProvider>
     </NavigationContainer>
   );
 }
