@@ -26,8 +26,6 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const { logout } = useAuth();
-
     const originalRequest = error.config;
     console.log(error.response.status);
 
@@ -55,7 +53,7 @@ api.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${newUser.token}`;
           return axios(originalRequest);
         } catch (error) {
-          logout();
+          // Fazer ação para deslogar
 
           console.log(error);
         }

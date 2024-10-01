@@ -45,10 +45,11 @@ const LoginScreen = () => {
       login(newUser);
 
     } catch (error: any) {
+      console.log(error)
       setLoading(false);
       const errors = error.response.data?.notifications;
       for (let err of errors) {
-        Alert.alert(err.message.value);
+        Keyboard.dismiss();
         control.setError("email", { message: "" });
         control.setError("password", { message: err.message.value });
       }
