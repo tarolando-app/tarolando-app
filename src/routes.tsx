@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -8,17 +8,27 @@ import CreateEvent from "./pages/CreateEvent";
 import CheckIn from "./pages/CheckIn";
 import Map from "./pages/Map";
 import Profile from "./pages/Profile";
-import { Image, View } from "react-native";
-
+import { Image, Vibration, View } from "react-native";
+import * as Haptic from "expo-haptics";
 import ButtonMenu from "./components/ButtonMenu";
 import EventDetails from "./pages/EventDetails";
 import EventsRoutes from "./pages/Events";
+import { useNavigation } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-
 export function Routes() {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("state", () => {
+      Haptic.impactAsync(Haptic.ImpactFeedbackStyle.Light);
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -66,8 +76,8 @@ export function Routes() {
         component={CheckIn}
         options={{
           tabBarLabel: "",
-          tabBarIcon: ({ size, color }) => (
-            <ButtonMenu size={32} color={color} />
+          tabBarIcon: ({ size, color, focused }) => (
+            <ButtonMenu size={32} color={color} active={focused} />
           ),
         }}
       ></Tab.Screen>

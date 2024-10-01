@@ -3,13 +3,16 @@ import { View, Text, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function ButtonMenu({ size, color }: any) {
+export default function ButtonMenu({ size, color, active }: any) {
   return (
     <LinearGradient
       colors={["#AE03FF", "#5756FF", "#00A8FF"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
-      style={styles.container}
+      style={[
+        active && { borderWidth: 1, borderColor: "#FFF" },
+        styles.container,
+      ]}
     >
       <MaterialCommunityIcons
         name="map-marker-outline"
