@@ -11,6 +11,8 @@ import EventDetails from "./src/pages/EventDetails";
 import { AuthProvider, useAuth } from "./src/contexts/AuthContext";
 import LoginScreen from "./src/auth/Login";
 import WelcomeScreen from "./src/auth/Welcome";
+import { DefaultTheme, PaperProvider } from "react-native-paper";
+import { darkColors } from "@rneui/base";
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createStackNavigator();
@@ -57,14 +59,29 @@ export default function App() {
     return null;
   }
 
+  const theme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      white: "#FFF",
+      primary: "#00A8FF",
+      background: "#333333",
+      outline: "#333333",
+      onSurface: "#FFF",
+      onSurfaceVariant: "#FCFCFC",
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <PaperProvider theme={theme}>
       <AuthProvider>
-        <LocationProvider>
-          <StatusBar style="light" />
-          <AppNavigator />
-        </LocationProvider>
+        <NavigationContainer>
+          <LocationProvider>
+            <StatusBar style="light" />
+            <AppNavigator />
+          </LocationProvider>
+        </NavigationContainer>
       </AuthProvider>
-    </NavigationContainer>
+    </PaperProvider>
   );
 }
