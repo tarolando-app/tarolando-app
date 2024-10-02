@@ -51,7 +51,7 @@
     },
     "owner": "tarolando",
     "runtimeVersion": {
-      "policy": "appVersion"
+      "policy": "nativeVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/e85281a4-8bdd-4d9b-ad6c-9c26efa5f16f"
