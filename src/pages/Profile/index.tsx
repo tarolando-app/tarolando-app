@@ -4,6 +4,10 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Button } from "@rneui/base";
 import { useEffect } from "react";
 import { fetchEventType } from "../../services/eventService";
+import Container from "../../components/Container";
+import Header from "../../components/Header";
+import TextGeneric from "../../components/TextGeneric";
+import ButtonGeneric from "../../components/ButtonGeneric";
 
 export default function App() {
   const { isAuthenticated, isGuest, logout, user } = useAuth();
@@ -14,24 +18,24 @@ export default function App() {
     console.log(result.data);
   };
 
-  useEffect(() => {
- 
-  }, []);
+  useEffect(() => {}, []);
 
   return (
-    <View style={styles.container}>
-      <Text>{user?.email}</Text>
-      <Text>É usuario logado? {isAuthenticated ? "Sim" : "Não"}</Text>
-      <Button onPress={logout}>Sair</Button>
-      <Text>Página de Profile!</Text>
-    </View>
+    <Container>
+      <Header text="Perfil"></Header>
+      <View style={styles.container}>
+        <TextGeneric>{user?.email}</TextGeneric>
+        <TextGeneric>É usuario logado? {isAuthenticated && !isGuest ? "Sim" : "Não"}</TextGeneric>
+
+        <ButtonGeneric style={{marginTop: 24}} text="Sair" full onPress={logout}></ButtonGeneric>
+      </View>
+    </Container>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },

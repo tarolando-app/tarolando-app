@@ -45,3 +45,4 @@ export const fetchEventType = async (): Promise<any> => {
     throw error;
   }
 };
+

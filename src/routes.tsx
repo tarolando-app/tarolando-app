@@ -66,6 +66,8 @@ export function Routes() {
         name="Evento"
         component={CreateEvent}
         options={{
+          unmountOnBlur: true,
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons name="plus" size={28} color={color} />
           ),
@@ -75,6 +77,7 @@ export function Routes() {
         name="CheckIn"
         component={CheckIn}
         options={{
+          headerShown: false,
           tabBarLabel: "",
           tabBarIcon: ({ size, color, focused }) => (
             <ButtonMenu size={32} color={color} active={focused} />
@@ -85,6 +88,7 @@ export function Routes() {
         name="Mapa"
         component={Map}
         options={{
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons
               name="compass-outline"
@@ -98,6 +102,7 @@ export function Routes() {
         name="Perfil"
         component={Profile}
         options={{
+          headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <Image
               style={{ width: 30, height: 30, borderRadius: 100 }}

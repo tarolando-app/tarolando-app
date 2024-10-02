@@ -1,8 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import TextGeneric from "./TextGeneric";
 
 export default function ButtonGeneric({
@@ -14,6 +14,7 @@ export default function ButtonGeneric({
   outline = false,
   disabled = false,
   loading = false,
+  onlyIcon = false,
   onPress,
   style,
   weight,
@@ -31,17 +32,17 @@ export default function ButtonGeneric({
         style={[
           styles.gradientContainer,
           full ? { width: "100%" } : {},
-          outline && { padding: 2 },
+          (outline && !onlyIcon) && { padding: 2 },
           disabled && styles.disabledButton,
         ]}
       >
-        <View style={[styles.container, outline ? styles.outline : {}]}>
+        <View style={[styles.container, (outline || onlyIcon) ? styles.outline : {}]}>
           {icon && iconPosition === "left" && (
             <MaterialCommunityIcons
               style={text && { marginRight: 10 }}
               name={icon}
               size={size + 5}
-              color={outline ? "#AE03FF" : "#FFF"}
+              color={"#FFF"}
             />
           )}
           {text && (
@@ -74,7 +75,7 @@ export default function ButtonGeneric({
 
 const styles = StyleSheet.create({
   fullWidth: {
-    width: "100%",
+   flex: 1
   },
   gradientContainer: {
     borderRadius: 10,

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, StatusBar } from "react-native";
 import Logo from "../../../assets/Logo.svg";
 import { useAuth } from "../../contexts/AuthContext";
 import ButtonGeneric from "../../components/ButtonGeneric";
@@ -13,8 +13,10 @@ const WelcomeScreen = () => {
 
   const navigation = useNavigation<any>();
 
+  const statusBarHeight = StatusBar.currentHeight || 0;
+
   return (
-    <View style={styles.container}>
+    <View style={{paddingTop: statusBarHeight, ...styles.container}}>
       <View>
         <GradientImage
           width={"100%"}

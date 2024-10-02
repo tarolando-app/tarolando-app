@@ -66,9 +66,9 @@ export default function App() {
       white: "#FFF",
       primary: "#00A8FF",
       background: "#333333",
-      outline: "#333333",
+      outline: "#828385",
       onSurface: "#FFF",
-      onSurfaceVariant: "#FCFCFC",
+      onSurfaceVariant: "#b9b9b9",
     },
   };
 

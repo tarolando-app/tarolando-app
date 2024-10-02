@@ -2,6 +2,7 @@ import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { log } from "console";
+import { Alert } from "react-native";
 
 const api = axios.create({
   baseURL: "https://its-happening-api-hml-mu3gmf3jma-rj.a.run.app",
@@ -26,6 +27,11 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
+    if (error?.response?.status === 500 || error?.response?.status === 503) {
+      Alert.alert('Estamos com uma instabilidade no sistema. Por favor, tente novamente mais tarde!')
+    }
+
+
     const originalRequest = error.config;
     console.log(error.response.status);
 
