@@ -31,7 +31,7 @@ export function StepAboutEvent({ submit }: any) {
             <TextInput
               mode="outlined"
               label=""
-              placeholder="Pool Party"
+              placeholder=""
               style={{ fontSize: 18, height: 56, marginTop: 8 }}
               onChangeText={(text) => setEventName(text)}
             />
@@ -42,7 +42,7 @@ export function StepAboutEvent({ submit }: any) {
               <TextInput
                 mode="outlined"
                 label=""
-                placeholder="Rua do Ciclano da Silva, 123"
+                placeholder="Faça sua busca..."
                 onPress={() => setModalVisible(true)}
                 value={selectedPlace} // Exibe o local selecionado
                 style={{ fontSize: 18, height: 56, marginTop: 8 }}

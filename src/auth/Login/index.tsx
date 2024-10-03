@@ -41,11 +41,10 @@ const LoginScreen = () => {
         ...result.data,
         expiresIn: Math.floor(Date.now() / 1000) + result?.data?.expiresIn,
       };
-      
-      login(newUser);
 
+      login(newUser);
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       setLoading(false);
       const errors = error.response.data?.notifications;
       for (let err of errors) {
@@ -82,117 +81,120 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      {!isKeyboardVisible && (
-        <ButtonGeneric
-          onPress={() => navigation.navigate("Welcome")}
-          outline
-          size={20}
-          icon="arrow-left"
-        />
-      )}
-      <View style={{ marginVertical: 32 }}>
-        <TextGeneric size={28}>Bem vindo de volta!</TextGeneric>
-        <TextGeneric size={28}>Que bom ver você.</TextGeneric>
-      </View>
-
-      <View>
-        {/* Controlador para o campo de e-mail */}
-        <Controller
-          control={control}
-          name="email"
-          rules={{ required: "O e-mail é obrigatório" }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              mode="outlined"
-              label="Insira seu e-mail"
-              textContentType="emailAddress"
-              style={{ fontSize: 18, height: 56 }}
-              returnKeyType="next"
-              onSubmitEditing={() => passwordInputRef.current?.focus()}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={!!errors.email}
-            />
-          )}
-        />
-        {errors.email && (
-          <TextGeneric size={14} color="#FF0000">
-            {errors.email.message}
-          </TextGeneric>
+      <View style={{ flex: 1 }}>
+        {!isKeyboardVisible && (
+          <ButtonGeneric
+            onPress={() => navigation.navigate("Welcome")}
+            outline
+            size={20}
+            icon="arrow-left"
+          />
         )}
+        <View style={{ marginVertical: 32 }}>
+          <TextGeneric size={28}>Bem vindo de volta!</TextGeneric>
+          <TextGeneric size={28}>Que bom ver você.</TextGeneric>
+        </View>
 
-        {/* Controlador para o campo de senha */}
-        <Controller
-          control={control}
-          name="password"
-          rules={{ required: "A senha é obrigatória" }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              mode="outlined"
-              label="Senha"
-              textContentType="password"
-              secureTextEntry={!showPassword}
-              style={{ fontSize: 18, height: 56, marginTop: 12 }}
-              returnKeyType="done"
-              ref={passwordInputRef}
-              right={
-                <TextInput.Icon
-                  onPress={togglePasswordVisibility}
-                  icon={showPassword ? "eye-off" : "eye"}
-                />
-              }
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              error={!!errors.password}
-            />
-          )}
-        />
-        {errors.password && (
-          <TextGeneric size={14} color="#FF0000">
-            {errors.password.message}
-          </TextGeneric>
-        )}
-
-        <View
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "flex-end",
-            marginTop: 12,
-          }}
-        >
-          <TouchableOpacity>
-            <TextGeneric weight={400} size={14}>
-              Esqueceu a senha?
+        <View>
+          {/* Controlador para o campo de e-mail */}
+          <Controller
+            control={control}
+            name="email"
+            rules={{ required: "O e-mail é obrigatório" }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                mode="outlined"
+                label="Insira seu e-mail"
+                textContentType="emailAddress"
+                style={{ fontSize: 18, height: 56 }}
+                returnKeyType="next"
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={!!errors.email}
+              />
+            )}
+          />
+          {errors.email && (
+            <TextGeneric size={14} color="#FF0000">
+              {errors.email.message}
             </TextGeneric>
-          </TouchableOpacity>
+          )}
+
+          {/* Controlador para o campo de senha */}
+          <Controller
+            control={control}
+            name="password"
+            rules={{ required: "A senha é obrigatória" }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                mode="outlined"
+                label="Senha"
+                textContentType="password"
+                secureTextEntry={!showPassword}
+                style={{ fontSize: 18, height: 56, marginTop: 12 }}
+                returnKeyType="done"
+                ref={passwordInputRef}
+                right={
+                  <TextInput.Icon
+                    onPress={togglePasswordVisibility}
+                    icon={showPassword ? "eye-off" : "eye"}
+                  />
+                }
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                error={!!errors.password}
+              />
+            )}
+          />
+          {errors.password && (
+            <TextGeneric size={14} color="#FF0000">
+              {errors.password.message}
+            </TextGeneric>
+          )}
+
+          <View
+            style={{
+              width: "100%",
+              display: "flex",
+              alignItems: "flex-end",
+              marginTop: 12,
+            }}
+          >
+            <TouchableOpacity>
+              <TextGeneric weight={400} size={14}>
+                Esqueceu a senha?
+              </TextGeneric>
+            </TouchableOpacity>
+          </View>
         </View>
+
+        <ButtonGeneric
+          style={{ marginTop: 32 }}
+          full
+          loading={loading}
+          text="Entrar"
+          onPress={handleSubmit(handleLogin as any)}
+        />
       </View>
-
-      <ButtonGeneric
-        style={{ marginTop: 32 }}
-        full
-        loading={loading}
-        text="Entrar"
-        onPress={handleSubmit(handleLogin as any)}
-      />
-
-      <View style={{ flex: 0.2, marginVertical: 32 }}>
-        <View style={styles.divisorWrapper}>
-          <View style={styles.divisor}></View>
-          <TextGeneric weight={300}>Ou</TextGeneric>
-          <View style={styles.divisor}></View>
-        </View>
-      </View>
-
-      <TouchableOpacity style={styles.btnGoogle}>
-        <Google height={26} />
-        <TextGeneric color="#333">Entre com Google</TextGeneric>
-      </TouchableOpacity>
 
       <View style={styles.registerWrapper}>
+        <View>
+          <View style={{ flex: 0.2, marginVertical: 32 }}>
+            <View style={styles.divisorWrapper}>
+              <View style={styles.divisor}></View>
+              <TextGeneric weight={300}>Ou</TextGeneric>
+              <View style={styles.divisor}></View>
+            </View>
+          </View>
+
+          <TouchableOpacity style={styles.btnGoogle}>
+            <Google height={26} />
+            <TextGeneric color="#333">Entre com Google</TextGeneric>
+          </TouchableOpacity>
+        </View>
         <View style={styles.register}>
           <TextGeneric size={16} weight={300}>
             Não tem uma conta?
@@ -241,13 +243,9 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingVertical: 18,
   },
-  registerWrapper: {
-    position: "absolute",
-    bottom: 15,
-    width: "100%",
-  },
+  registerWrapper: {},
   register: {
-    marginLeft: 60,
+    marginTop: "30%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
