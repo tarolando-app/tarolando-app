@@ -52,6 +52,7 @@ export function Routes() {
         name="Início"
         component={EventsRoutes}
         options={{
+          unmountOnBlur: true,
           headerShown: false,
           tabBarIcon: ({ size, color }) => (
             <MaterialCommunityIcons

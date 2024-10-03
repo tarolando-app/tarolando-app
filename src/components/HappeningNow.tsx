@@ -72,21 +72,21 @@ export default function HappeningNow({ tab, events = [] }: any) {
         </View>
       )}
 
-      {events.map((event: any) => (
-        <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 24,
-              marginHorizontal: 16,
-            }}
-          >
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal={true}>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 24,
+            marginHorizontal: 16,
+          }}
+        >
+          {events.map((event: any) => (
             <CardEvent key={event.eventId} event={event}></CardEvent>
-          </View>
-        </ScrollView>
-      ))}
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 }

@@ -14,6 +14,7 @@ import Header from "../components/Header";
 import { fetchGoogleAutocomplete } from "../services/googleService";
 import { useLocation } from "../contexts/LocationContext";
 import SkeletonLoadingSearch from "./skeletons/SkeletonLoadingSearch";
+import { KeyboardAvoidingView, Platform } from "react-native";
 
 interface LocationSearchModalProps {
   visible: boolean;
@@ -78,54 +79,54 @@ const LocationSearchModal: React.FC<LocationSearchModalProps> = ({
 
   return (
     <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
+    animationType="slide"
+    transparent={true}
+    visible={visible}
+    onRequestClose={onClose}
+  >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.modalContainer}
     >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          <Header action={onClose} text="Informe a localização" />
-          <Searchbar
-            ref={searchbarRef}
-            style={{ backgroundColor: "#333" }}
-            placeholder="Buscar localização"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-          />
-          <ScrollView style={styles.searchResults}>
-            {loading && <SkeletonLoadingSearch></SkeletonLoadingSearch>}
-            {places.length == 0 && (
-              <View style={{ marginHorizontal: "auto", marginTop: "20%" }}>
-                <TextGeneric weight={200}>Faça sua busca...</TextGeneric>
-              </View>
-            )}
-            {places.map((item: any) => (
-              <TouchableOpacity
-                key={item.placePrediction?.placeId}
-                style={{ marginTop: 8 }}
-                onPress={() => {
-                  onSelectPlace(item); // Emite o local selecionado para o pai
-                  onClose(); // Fecha o modal
-                }}
-              >
-                <CardWrapper>
-                  <TextGeneric size={16}>
-                    {item.placePrediction?.structuredFormat?.mainText?.text}
-                  </TextGeneric>
-                  <TextGeneric size={14} weight={500} color="#828385">
-                    {
-                      item.placePrediction?.structuredFormat?.secondaryText
-                        ?.text
-                    }
-                  </TextGeneric>
-                </CardWrapper>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
+      <View style={styles.modalContent}>
+        <Header action={onClose} text="Informe a localização" />
+        <Searchbar
+          ref={searchbarRef}
+          style={{ backgroundColor: "#333" }}
+          placeholder="Buscar localização"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+        />
+        <ScrollView style={styles.searchResults}>
+          {loading && <SkeletonLoadingSearch />}
+          {places.length == 0 && (
+            <View style={{ marginHorizontal: "auto", marginTop: "20%" }}>
+              <TextGeneric weight={200}>Faça sua busca...</TextGeneric>
+            </View>
+          )}
+          {places.map((item: any) => (
+            <TouchableOpacity
+              key={item.placePrediction?.placeId}
+              style={{ marginTop: 8 }}
+              onPress={() => {
+                onSelectPlace(item);
+                onClose();
+              }}
+            >
+              <CardWrapper>
+                <TextGeneric size={16}>
+                  {item.placePrediction?.structuredFormat?.mainText?.text}
+                </TextGeneric>
+                <TextGeneric size={14} weight={500} color="#828385">
+                  {item.placePrediction?.structuredFormat?.secondaryText?.text}
+                </TextGeneric>
+              </CardWrapper>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
-    </Modal>
+    </KeyboardAvoidingView>
+  </Modal>
   );
 };
 

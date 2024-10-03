@@ -19,7 +19,7 @@ import Events from "./components/Events";
 const initialLayout = { width: Dimensions.get("window").width };
 
 export default function Home() {
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "comunidade", title: "Comunidade" },
     { key: "recomendados", title: "Recomendados" },

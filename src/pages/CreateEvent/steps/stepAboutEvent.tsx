@@ -12,17 +12,10 @@ export function StepAboutEvent({ submit }: any) {
   const [selectedPlace, setSelectedPlace] = useState("");
   const [placeId, setPlaceId] = useState("");
   const [eventName, setEventName] = useState("");
-  const [googlePlaceObject, setGooglePlaceObject] = useState({});
+
 
   const handlePlaceSelect = async (place: any) => {
-    const body = {
-      externalGooglePlaceId: place.placePrediction?.placeId,
-    };
-
-    const result = await fetchGooglePlaceRegister(body);
-
-    setPlaceId(result?.data?.googlePlaceId);
-    setGooglePlaceObject(result?.data);
+    setPlaceId(place.placePrediction?.placeId);
     setSelectedPlace(place.placePrediction?.text?.text || "");
   };
 
@@ -65,7 +58,6 @@ export function StepAboutEvent({ submit }: any) {
           submit({
             GooglePlaceId: placeId,
             Name: eventName,
-            GooglePlaceObject: googlePlaceObject,
           });
         }}
         disabled={!eventName || !placeId}
@@ -88,6 +80,7 @@ const styles = StyleSheet.create({
     marginTop: 32,
     marginBottom: 12,
     display: "flex",
+    flexDirection: 'column',
     gap: 20,
   },
 });

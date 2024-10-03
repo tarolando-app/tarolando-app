@@ -87,7 +87,7 @@ export function StepDateEvent({ submit, back }: any) {
             />
           </View>
           <View>
-            <TextGeneric weight={500}>Duração do evento</TextGeneric>
+            <TextGeneric weight={500}>Duração do evento (horas)</TextGeneric>
             <TextInput
               mode="outlined"
               label=""
@@ -101,14 +101,7 @@ export function StepDateEvent({ submit, back }: any) {
         </View>
       </CardWrapper>
       <View
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: 24,
-          gap: 48,
-          justifyContent: "space-between",
-        }}
+        style={styles.buttons}
       >
         <ButtonGeneric
           onPress={() => back()}
@@ -121,8 +114,8 @@ export function StepDateEvent({ submit, back }: any) {
         <ButtonGeneric
           onPress={() => {
             submit({
-              DateAndTime: eventStartDate,
-              ClosingDate: eventEndDate,
+              DateAndTime: eventStartDate.slice(0, 16),
+              ClosingDate: eventEndDate.slice(0, 16),
             });
           }}
           disabled={!eventStartDate || !eventDuration}
@@ -141,5 +134,13 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     display: "flex",
     gap: 20,
+  },
+  buttons: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 24,
+    gap: 48,
+    justifyContent: "space-between",
   },
 });
