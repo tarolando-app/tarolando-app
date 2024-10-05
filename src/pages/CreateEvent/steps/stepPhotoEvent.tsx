@@ -5,7 +5,7 @@ import CardWrapper from "../../../components/CardWrapper";
 import ButtonGeneric from "../../../components/ButtonGeneric";
 import PhotoSelect from "../../../components/PhotoSelect";
 
-export function StepPhotoEvent({ submit, back, googlePlacesImages = [] }: any) {
+export function StepPhotoEvent({ submit, back, googlePlacesImages = [], loading }: any) {
   const [selected, setSelected] = useState();
 
   return (
@@ -30,7 +30,7 @@ export function StepPhotoEvent({ submit, back, googlePlacesImages = [] }: any) {
           onPress={() => {
             submit(selected);
           }}
-          disabled={false}
+          loading={loading}
           text="Criar evento"
           icon="check"
           full

@@ -50,8 +50,8 @@ export default function CreateEvent() {
       keyboardDidShowListener.remove();
     };
   }, []);
-  const { loadEvents } = useEvents("Comunidade", 0);
   const [googlePlaceObject, setGooglePlaceObject] = useState<any>({});
+  const [loading, setLoading] = useState(false);
 
   const [stepAboutEvent, setStepAboutEvent] = useState();
   const [stepDateEvent, setStepDateEvent] = useState();
@@ -92,12 +92,12 @@ export default function CreateEvent() {
       stepTypeEvent,
       stepPhotoEvent: data,
     };
-
+    setLoading(true);
     const result = await submitEventForm(body);
-
+    setLoading(false);
     if (result) {
       Alert.alert("Evento criado com sucesso!", "Seu evento já está no ar.");
-      navigation.navigate("Início");
+      navigation.navigate("Início", { reload: true });
     }
   };
 
@@ -148,6 +148,7 @@ export default function CreateEvent() {
               googlePlaceObject ? googlePlaceObject.googlePlacesImages : []
             }
             submit={handleStepPhotoEvent}
+            loading={loading}
             back={backStep}
           ></StepPhotoEvent>
         )}

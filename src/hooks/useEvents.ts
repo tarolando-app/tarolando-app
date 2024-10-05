@@ -8,15 +8,7 @@ import {
   fetchTrending,
 } from "../services/eventService";
 
-export function useEvents(tab: string, index: number) {
-  const conditions = [
-    { tab: "Recomendados", index: 1 },
-    { tab: "Comunidade", index: 0 },
-  ];
-
-  const shouldLoadEvents = conditions.some(
-    (cond) => cond.tab === tab && cond.index === index
-  );
+export function useEvents(tab: string) {
 
   const [eventsHappeningNow, setEventsHappeningNow] = useState<Event[]>([]);
   const [eventsUpcoming, setEventsUpcoming] = useState<Event[]>([]);
@@ -26,7 +18,7 @@ export function useEvents(tab: string, index: number) {
   const { location } = useLocation();
 
   const loadEvents = useCallback(async () => {
-    if (!location || !shouldLoadEvents) return;
+    if (!location) return;
 
     try {
       setLoading(true);

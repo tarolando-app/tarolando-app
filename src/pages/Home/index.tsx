@@ -17,14 +17,18 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Events from "./components/Events";
 import CustomTabNavigator from "../../components/CustomTabNavigator";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useEvents } from "../../hooks/useEvents";
 
 export default function Home() {
+  const eventsCommunity = useEvents("Comunidade");
+  const eventsRecommended = useEvents("Recomendados");
+
   const Community = () => {
-    return <Events tab="Comunidade" index={0} />;
+    return <Events tab="Comunidade" events={eventsCommunity} />;
   };
 
   const Recommended = () => {
-    return <Events tab="Recomendados" index={1} />;
+    return <Events tab="Recomendados" events={eventsRecommended} />;
   };
 
   const statusBarHeight = StatusBar.currentHeight || 0;

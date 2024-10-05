@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 interface GradientViewProps {
   width: any;
-  height: number;
+  height: any;
   children: React.ReactNode;
 }
 

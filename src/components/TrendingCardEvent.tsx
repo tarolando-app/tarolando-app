@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import GradientImage from "./GradientImage";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SimpleCardEvent({ event }: any) {
   var moment = require("moment/min/moment-with-locales");
@@ -13,8 +14,19 @@ export default function SimpleCardEvent({ event }: any) {
     return text;
   };
 
+  const navigation = useNavigation<any>();
+
+  const handlePress = (id: string) => {
+    navigation.navigate("EventDetails", { id });
+  };
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        handlePress(event.eventId);
+      }}
+      style={styles.container}
+    >
       <GradientImage
         height={120}
         width={200}
@@ -23,7 +35,9 @@ export default function SimpleCardEvent({ event }: any) {
         customShadow={1.8}
       >
         <View style={styles.position}>
-          <Text style={styles.textEventName}>{truncateText(event.googlePlace.name, 21)}</Text>
+          <Text style={styles.textEventName}>
+            {truncateText(event.googlePlace.name, 21)}
+          </Text>
         </View>
       </GradientImage>
     </TouchableOpacity>
@@ -67,7 +81,6 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 14,
     fontFamily: "PlusJakartaSans-600",
-
   },
   textDistance: {
     color: "#00A8FF",

@@ -8,7 +8,6 @@ export default function EventsRoutes() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="EventDetails" component={EventDetails} />
     </Stack.Navigator>
   );
 }

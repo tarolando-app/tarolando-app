@@ -7,9 +7,11 @@ export default function TextGeneric({
   size = 18,
   color = "#FFF",
   style,
+  ...props
 }: any) {
   return (
     <Text
+      {...props}
       style={{
         ...{
           fontSize: size,

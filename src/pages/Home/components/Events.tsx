@@ -7,7 +7,7 @@ import { Skeleton } from "@rneui/themed";
 import SkeletonLoadingHome from "../../../components/skeletons/SkeletonLoadingHome";
 import TrendingEvents from "../../../components/TrendingEvents";
 
-function Events({ tab, index }: any) {
+function Events({ tab, events }: any) {
   const [refreshing, setRefreshing] = useState(false);
   const {
     eventsHappeningNow,
@@ -16,7 +16,7 @@ function Events({ tab, index }: any) {
     loading,
     error,
     loadEvents,
-  } = useEvents(tab, index);
+  } = events;
 
   const onRefresh = async () => {
     setRefreshing(true);

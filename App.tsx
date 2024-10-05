@@ -26,7 +26,7 @@ const AppNavigator = () => {
         {isAuthenticated ? (
           <>
             <Stack.Screen name="Main" component={Routes} />
-            <Stack.Screen name="Chat" component={EventDetails} />
+            <Stack.Screen name="EventDetails" component={EventDetails} />
           </>
         ) : (
           <>

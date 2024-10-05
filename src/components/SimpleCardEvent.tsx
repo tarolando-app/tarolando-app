@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
@@ -18,8 +19,19 @@ export default function SimpleCardEvent({ event }: any) {
     return text;
   };
 
+  const navigation = useNavigation<any>();
+
+  const handlePress = (id: string) => {
+    navigation.navigate("EventDetails", { id });
+  };
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        handlePress(event.eventId);
+      }}
+      style={styles.container}
+    >
       <Image
         source={{
           uri: event?.urlCoverPhoto,
@@ -30,10 +42,12 @@ export default function SimpleCardEvent({ event }: any) {
       <View>
         <Text style={styles.text}>{truncateText(event.name, 22)}</Text>
         <Text style={styles.textEventName}>
-        {truncateText(event.googlePlace.name, 22)} {"  "}
+          {truncateText(event.googlePlace.name, 22)} {"  "}
           <Text style={styles.textDistance}>{event.distanceInKm} km</Text>
         </Text>
-        <Text style={styles.textInfo}>{capitalizeFirstLetter(formattedDate)}</Text>
+        <Text style={styles.textInfo}>
+          {capitalizeFirstLetter(formattedDate)}
+        </Text>
       </View>
     </TouchableOpacity>
   );

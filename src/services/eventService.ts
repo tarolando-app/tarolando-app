@@ -56,10 +56,25 @@ export const fetchMusicalGenreType = async (): Promise<any> => {
   }
 };
 
+export const fetchEventById = async (
+  eventId: string,
+  params: any
+): Promise<any> => {
+  try {
+    const response = await api.get<any>(`/api/v1/event/detail/${eventId}`, {
+      params,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar o evento:", error);
+    throw error;
+  }
+};
+
 export const submitEventForm = async (body: any): Promise<any> => {
   const formData = new FormData();
 
-  console.log(body)
+  console.log(body);
 
   // Adiciona campos ao formData
   formData.append("EventTypeId", body.stepTypeEvent.EventTypeId);
@@ -80,7 +95,7 @@ export const submitEventForm = async (body: any): Promise<any> => {
     formData.append("SuggestedImageId", body.stepPhotoEvent.id);
   }
 
-  console.log(formData)
+  console.log(formData);
 
   try {
     const response = await api.post("/api/v1/event/user", formData, {
