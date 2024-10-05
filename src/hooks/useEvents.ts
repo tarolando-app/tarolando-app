@@ -77,6 +77,7 @@ export function useEvents(tab: string, index: number) {
     } finally {
       setLoading(false);
     }
+    console.log('chamou aqui')
   }, [location, tab]);
 
   useEffect(() => {

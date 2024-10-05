@@ -1,23 +1,45 @@
-import { useRoute } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { View } from "react-native";
+import TextGeneric from "../../components/TextGeneric";
+import Container from "../../components/Container";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import CustomTabNavigator from "../../components/CustomTabNavigator";
+
 
 export default function EventDetails() {
-  const route = useRoute<any>();
-  const { id } = route.params;
-  
+  const Event = () => {
+    return (
+      <View>
+        <TextGeneric>Evento</TextGeneric>
+      </View>
+    );
+  };
+
+  const People = () => {
+    return (
+      <View>
+        <TextGeneric>Pessoas</TextGeneric>
+      </View>
+    );
+  };
+
+  const Chat = () => {
+    return (
+      <View>
+        <TextGeneric>Chat</TextGeneric>
+      </View>
+    );
+  };
+
+  const Tab = createMaterialTopTabNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Página de Detalhe do Evento! Evento id {id? id: ''}</Text>
-    </View>
+    <Container>
+      <CustomTabNavigator backRoute="Home">
+        <Tab.Screen name="Sobre" component={Event} />
+        <Tab.Screen name="Pessoas" component={People} />
+        <Tab.Screen name="Chat" component={Chat} />
+      </CustomTabNavigator>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

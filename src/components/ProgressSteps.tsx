@@ -5,7 +5,7 @@ import { ProgressBar } from "react-native-paper";
 export default function ProgressSteps({ steps, currentIndex }: any) {
   const totalSteps = steps.length;
   const progress = (currentIndex + 1) / totalSteps;
-
+  
   return (
     <View>
       <ProgressBar
