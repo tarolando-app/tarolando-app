@@ -13,6 +13,7 @@ import LoginScreen from "./src/auth/Login";
 import WelcomeScreen from "./src/auth/Welcome";
 import { DefaultTheme, PaperProvider } from "react-native-paper";
 import { darkColors } from "@rneui/base";
+import EventList from "./src/pages/EventList";
 
 SplashScreen.preventAutoHideAsync();
 const Stack = createStackNavigator();
@@ -27,6 +28,7 @@ const AppNavigator = () => {
           <>
             <Stack.Screen name="Main" component={Routes} />
             <Stack.Screen name="EventDetails" component={EventDetails} />
+            <Stack.Screen name="EventList" component={EventList} />
           </>
         ) : (
           <>

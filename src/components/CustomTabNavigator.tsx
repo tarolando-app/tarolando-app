@@ -31,11 +31,19 @@ const CustomTabNavigator = ({
     style = { ...style, ...haveButton };
   }
 
+  const handleGoBack = () => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate(backRoute);
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       {backRoute && (
         <ButtonGeneric
-          onPress={() => navigation.navigate(backRoute)}
+          onPress={() => handleGoBack()}
           onlyIcon
           icon="arrow-left"
           size={24}

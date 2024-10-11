@@ -8,13 +8,23 @@ import {
 } from "react-native";
 import CardEvent from "./CardEvent";
 import SimpleCardEvent from "./SimpleCardEvent";
+import { useNavigation } from "@react-navigation/native";
 
 export default function UpcomingEvents({ tab, events = [] }: any) {
+  const navigation = useNavigation<any>();
+
+  const navigateToList = () => {
+    navigation.navigate("EventList", {
+      happeningNow: false,
+      recommended: tab === "Recomendados",
+    });
+  };
+
   return (
     <View style={{ marginTop: 48, paddingBottom: 48 }}>
       <View style={styles.header}>
         <Text style={styles.text}>Próximos eventos</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={navigateToList}>
           <Text style={styles.textSeeMore}>Ver mais</Text>
         </TouchableOpacity>
       </View>
@@ -22,12 +32,12 @@ export default function UpcomingEvents({ tab, events = [] }: any) {
         <View
           style={{ flexDirection: "column", gap: 24, marginHorizontal: 16 }}
         >
-                     {events.length == 0 && (
+          {events.length == 0 && (
             <View
               style={{
                 display: "flex",
                 justifyContent: "center",
-                width: '100%',
+                width: "100%",
                 marginVertical: 20,
               }}
             >
@@ -36,7 +46,7 @@ export default function UpcomingEvents({ tab, events = [] }: any) {
                   fontFamily: "PlusJakartaSans-500",
                   fontSize: 20,
                   color: "#FFF",
-                  width: '80%',
+                  width: "80%",
                   textAlign: "center",
                   alignSelf: "center",
                   marginBottom: 10,
@@ -47,7 +57,10 @@ export default function UpcomingEvents({ tab, events = [] }: any) {
             </View>
           )}
           {events.map((event: any) => (
-            <SimpleCardEvent key={event.eventId} event={event}></SimpleCardEvent>
+            <SimpleCardEvent
+              key={event.eventId}
+              event={event}
+            ></SimpleCardEvent>
           ))}
         </View>
       </View>

@@ -7,7 +7,7 @@ import {
   Alert,
 } from "react-native";
 import ButtonGeneric from "../../components/ButtonGeneric";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import TextGeneric from "../../components/TextGeneric";
 import Header from "../../components/Header";
@@ -57,6 +57,7 @@ export default function CreateEvent() {
   const [stepDateEvent, setStepDateEvent] = useState();
   const [stepTypeEvent, setStepTypeEvent] = useState();
   const [stepPhotoEvent, setStepPhotoEvent] = useState();
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const handleStepAboutEvent = async (data: any) => {
     setStepAboutEvent(data);
@@ -79,6 +80,10 @@ export default function CreateEvent() {
   const handleStepTypeEvent = (data: any) => {
     setStepTypeEvent(data);
     setCurrentIndex(3);
+
+    setTimeout(() => {
+      scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+    }, 100);
   };
 
   const handleStepPhotoEvent = async (data: any) => {
@@ -108,7 +113,7 @@ export default function CreateEvent() {
   return (
     <Container>
       <Header text="Criar evento"></Header>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false}>
         <View style={{ marginTop: 24 }}>
           <TextGeneric size={26}>
             Preencha as etapas para criar seu novo evento

@@ -18,11 +18,18 @@ const screenWidth = Dimensions.get("window").width;
 export default function HappeningNow({ tab, events = [] }: any) {
   const navigation = useNavigation<any>();
 
+  const navigateToList = () => {
+    navigation.navigate("EventList", {
+      happeningNow: true,
+      recommended: tab === "Recomendados",
+    });
+  };
+
   return (
     <View>
       <View style={styles.header}>
         <Text style={styles.text}>Rolando agora</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={navigateToList}>
           <Text style={styles.textSeeMore}>Ver mais</Text>
         </TouchableOpacity>
       </View>
