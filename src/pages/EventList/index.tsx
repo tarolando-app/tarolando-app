@@ -10,7 +10,7 @@ import Container from "../../components/Container";
 import Header from "../../components/Header";
 import { TextInput } from "react-native-paper";
 import ButtonGeneric from "../../components/ButtonGeneric";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { fetchHappeningNow, fetchUpcoming } from "../../services/eventService";
 import { useLocation } from "../../contexts/LocationContext";
 import moment from "moment";
@@ -28,7 +28,7 @@ export default function EventList() {
   const [totalPages, setTotalPages] = useState(1); // Número total de páginas
   const [refreshing, setRefreshing] = useState(false); // Estado para pull-to-refresh
   const { location } = useLocation();
-
+  const [filters, setFilters] = useState<any>({});
   const skeletonArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   const route: any = useRoute();
@@ -38,7 +38,8 @@ export default function EventList() {
 
   const loadEventsHappeningNow = async (
     isRecommended?: boolean,
-    pageNumber = 1
+    pageNumber = 1,
+    filter?: any
   ) => {
     if (pageNumber > totalPages) return; // Evita buscar se já estiver na última página
     setLoading(true);
@@ -48,8 +49,13 @@ export default function EventList() {
       longitude: location?.longitude,
       page: pageNumber,
       pageSize: 10,
-      maxDistanceInKm: 30,
+      maxDistanceInKm: filters.maxDistanceInKm || 30, // Aplica filtro de distância
       recommended: isRecommended,
+      eventName: filter?.eventName, // Aplica filtro de nome do evento
+      eventTypesIds: filter?.EventTypesIds, // Aplica filtro de tipo de evento
+      musicalGenreIds: filter?.MuscalGenreIds, // Aplica filtro de gênero musical
+      startDate: filter?.StartDate, // Aplica filtro de data inicial
+      endDate: filter?.EndDate, // Aplica filtro de data final
     });
 
     setLoading(false);
@@ -57,13 +63,18 @@ export default function EventList() {
     setEvents((prev: any) => [...prev, ...happeningNowPromise.data.items]); // Adiciona os eventos
   };
 
+  // Método atualizado para incluir filtros
   const loadEventsUpcoming = async (
     isRecommended?: boolean,
-    pageNumber = 1
+    pageNumber = 1,
+    filter?: any
   ) => {
     if (pageNumber > totalPages) return; // Evita buscar se já estiver na última página
-    const startDate = moment().format("YYYY-MM-DDTHH:mm:ss");
-    const endDate = moment().add(3, "months").format("YYYY-MM-DDTHH:mm:ss");
+    const startDate =
+      filters.StartDate || moment().format("YYYY-MM-DDTHH:mm:ss");
+    const endDate =
+      filters.EndDate ||
+      moment().add(3, "months").format("YYYY-MM-DDTHH:mm:ss");
     setLoading(true);
 
     const upcomingPromise = await fetchUpcoming({
@@ -71,8 +82,11 @@ export default function EventList() {
       longitude: location?.longitude,
       page: pageNumber,
       pageSize: 10,
-      maxDistanceInKm: 30,
+      maxDistanceInKm: filter?.maxDistanceInKm || 30, // Aplica filtro de distância
       recommended: isRecommended,
+      eventName: filter?.eventName, // Aplica filtro de nome do evento
+      eventTypesIds: filter?.EventTypesIds, // Aplica filtro de tipo de evento
+      musicalGenreIds: filter?.MuscalGenreIds, // Aplica filtro de gênero musical
       startDate,
       endDate,
     });
@@ -85,6 +99,7 @@ export default function EventList() {
   useEffect(() => {
     const { happeningNow, recommended } = params;
     setRecommended(recommended);
+    setHappeningNow(happeningNow);
     setPage(1); // Reseta a página para 1 ao recarregar
     if (happeningNow) {
       loadEventsHappeningNow(recommended, 1);
@@ -133,6 +148,44 @@ export default function EventList() {
     </>
   );
 
+  const typingTimeout = useRef<any>(null);
+  const searchbarRef = useRef<any>(null);
+
+  const applyFilters = (newFilters: any) => {
+    setFilters(newFilters);
+    setPage(1);
+    setTotalPages(1);
+    setEvents([]);
+
+    if (happeningNow) {
+      loadEventsHappeningNow(recommended, 1, newFilters); // Recarrega eventos de acordo com os filtros
+    } else {
+      loadEventsUpcoming(recommended, 1, newFilters);
+    }
+  };
+
+  const handleFilterSubmit = (filters: any) => {
+    const newFilters = {
+      eventName: filters?.eventName,
+      maxDistanceInKm: filters?.maxDistanceInKm,
+      eventTypesIds: filters?.EventTypesIds,
+      muscalGenreIds: filters?.MuscalGenreIds,
+      startDate: filters?.StartDate,
+      endDate: filters?.EndDate,
+    };
+    applyFilters(newFilters);
+  };
+
+  const onChangeSearch = (query: string) => {
+    if (typingTimeout.current) {
+      clearTimeout(typingTimeout.current);
+    }
+
+    typingTimeout.current = setTimeout(() => {
+      handleFilterSubmit({ ...filters, eventName: query });
+    }, 400);
+  };
+
   return (
     <Container>
       <Header text="Rolando agora"></Header>
@@ -142,6 +195,8 @@ export default function EventList() {
           mode="outlined"
           label="Pesquise ou filtre"
           textContentType="emailAddress"
+          ref={searchbarRef}
+          onChangeText={onChangeSearch}
           style={{ fontSize: 18, height: 56, flex: 1 }}
           returnKeyType="next"
         />
