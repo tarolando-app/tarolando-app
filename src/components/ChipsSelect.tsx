@@ -1,7 +1,7 @@
 import { Text } from "@rneui/base";
-import { StyleSheet, View, StatusBar } from "react-native";
+import { StyleSheet, View, StatusBar, TouchableOpacity } from "react-native";
 import TextGeneric from "./TextGeneric";
-import { TouchableOpacity } from "react-native-gesture-handler";
+
 import { useState } from "react";
 
 export default function ChipsSelect({
@@ -40,11 +40,13 @@ export default function ChipsSelect({
 
   return (
     <View style={{ ...styles.container, ...style }}>
-      <TextGeneric weight={500}>{text}</TextGeneric>
+      <TextGeneric weight={500}>{text}teste</TextGeneric>
       <View style={styles.chips}>
         {items.map((item: any) => {
           const itemId = item[idName];
           const selected = isSelected(itemId);
+
+          console.log(item)
 
           return (
             <TouchableOpacity
